@@ -22,6 +22,11 @@ namespace QuestionnaireAPI.Middleware
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notFoundException.Message);
             }
+            catch (ResourceDoesExistException resourceDoesExistException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(resourceDoesExistException.Message);
+            }
             catch(Exception e)
             {
                 System.Console.WriteLine(e);

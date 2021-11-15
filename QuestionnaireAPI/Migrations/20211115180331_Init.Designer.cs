@@ -10,7 +10,7 @@ using QuestionnaireAPI.Context;
 namespace QuestionnaireAPI.Migrations
 {
     [DbContext(typeof(QuestionnaireDbContext))]
-    [Migration("20211115113115_Init")]
+    [Migration("20211115180331_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,7 +140,7 @@ namespace QuestionnaireAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

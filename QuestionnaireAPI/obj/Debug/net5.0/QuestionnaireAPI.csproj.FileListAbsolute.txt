@@ -22,7 +22,6 @@ E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Microsoft.IdentityMo
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Microsoft.OpenApi.dll
-E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Newtonsoft.Json.dll
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -59,3 +58,4 @@ E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\obj\Debug\net5.0\QuestionnaireAPI.dll
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\obj\Debug\net5.0\ref\QuestionnaireAPI.dll
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\obj\Debug\net5.0\QuestionnaireAPI.pdb
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\obj\Debug\net5.0\QuestionnaireAPI.genruntimeconfig.cache
+E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

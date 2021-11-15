@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\QuestionnaireAPI.csproj": {}
+    "E:\\Nauka\\QuestionnaireAPI\\QuestionnaireAPI\\QuestionnaireAPI.csproj": {}
   },
   "projects": {
-    "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\QuestionnaireAPI.csproj": {
+    "E:\\Nauka\\QuestionnaireAPI\\QuestionnaireAPI\\QuestionnaireAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\QuestionnaireAPI.csproj",
+        "projectUniqueName": "E:\\Nauka\\QuestionnaireAPI\\QuestionnaireAPI\\QuestionnaireAPI.csproj",
         "projectName": "QuestionnaireAPI",
-        "projectPath": "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\QuestionnaireAPI.csproj",
+        "projectPath": "E:\\Nauka\\QuestionnaireAPI\\QuestionnaireAPI\\QuestionnaireAPI.csproj",
         "packagesPath": "C:\\Users\\mazi2\\.nuget\\packages\\",
-        "outputPath": "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\obj\\",
+        "outputPath": "E:\\Nauka\\QuestionnaireAPI\\QuestionnaireAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -43,6 +43,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.12, )"

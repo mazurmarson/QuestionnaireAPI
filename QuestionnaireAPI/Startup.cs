@@ -1,18 +1,22 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuestionnaireAPI.Context;
 using QuestionnaireAPI.Middleware;
+using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace QuestionnaireAPI
@@ -30,10 +34,29 @@ namespace QuestionnaireAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            
+            var authenticationSettings = new AuthenticationSettings();
+            Configuration.GetSection("Authentication").Bind(authenticationSettings);
+            services.AddSingleton(authenticationSettings);
+            services.AddAuthentication(opt => {
+                opt.DefaultAuthenticateScheme = "Bearer";
+                opt.DefaultScheme = "Bearer";
+                opt.DefaultChallengeScheme = "Bearer";
+            }).AddJwtBearer(cfg => {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = authenticationSettings.JwtIssuer, //Kto generuje
+                    ValidAudience = authenticationSettings.JwtIssuer, //Kto jest odbiorcą
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
+                };
+            });
             services.AddControllers();
             services.AddDbContext<QuestionnaireDbContext>();
             services.AddScoped<IGenRepo, GenRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IQuestionnaireRepo, QuestionnaireRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IAnswerRepo, AnswerRepo>();
@@ -54,6 +77,7 @@ namespace QuestionnaireAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "QuestionnaireAPI v1"));
             }
             app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseAuthentication();
             app.UseHttpsRedirection();
 
             app.UseRouting();

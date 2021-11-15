@@ -16,7 +16,7 @@ namespace QuestionnaireAPI.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

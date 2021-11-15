@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
 
@@ -17,10 +18,17 @@ namespace QuestionnaireAPI.Controllers
          }
 
          [HttpPost("register")]
-         public async Task<IActionResult> Register(User user)
+         public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
          {
-            await _repo.Register(user);
-             return Ok();
+            await _repo.Register(registerUserDto);
+            return StatusCode(201);
          }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto dto)
+        {
+            string token = await _repo.GenerateJwt(dto);
+            return Ok(token);
+        }
     }
 }
