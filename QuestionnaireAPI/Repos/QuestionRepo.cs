@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using QuestionnaireAPI.Context;
 using QuestionnaireAPI.Models;
 
@@ -25,6 +26,18 @@ namespace QuestionnaireAPI.Repos
             await _context.SaveChangesAsync();
 
             return question;
+        }
+
+        public async Task DeleteQuestion(int questionId)
+        {
+            var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == questionId);
+            if(question is null)
+            {
+                throw new System.Exception();
+            }
+
+             _context.Remove(question);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -6,5 +6,6 @@ namespace QuestionnaireAPI.Repos
     public interface IQuestionRepo : IGenRepo
     {
          Task<Question> AddQuestion(int questionnaireId,Question question);
+         Task DeleteQuestion(int questionId);
     }
 }

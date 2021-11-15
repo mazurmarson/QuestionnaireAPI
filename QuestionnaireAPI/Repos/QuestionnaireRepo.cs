@@ -24,5 +24,18 @@ namespace QuestionnaireAPI.Repos
 
             return questionnaire;
         }
+
+        public async Task DeleteQuestionnaire(int questionnaireId)
+        {
+            var questionnaire = await _context.Questionnaires.FirstOrDefaultAsync(x => x.Id == questionnaireId);
+            if(questionnaire is null)
+            {
+                throw new System.Exception();
+            }
+
+             _context.Remove(questionnaire);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }

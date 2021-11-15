@@ -39,6 +39,15 @@ namespace QuestionnaireAPI.Controllers
             return Ok();
         }
 
+        [HttpDelete("{subAnswerId}")]
+        public async Task<ActionResult> DeleteSubAnswer([FromRoute] int subAnswerId)
+        {
+             await _repo.DeleteSubAnswer(subAnswerId);
+
+            return Ok();
+        }
+        
+
 
     }
 }

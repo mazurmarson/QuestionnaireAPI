@@ -73,5 +73,17 @@ namespace QuestionnaireAPI.Repos
 
 
         }
+
+        public async Task DeleteSubAnswer(int subAnswerId)
+        {
+            var subAnswer = await _context.SubAnswers.FirstOrDefaultAsync(x => x.Id == subAnswerId);
+            if(subAnswer is null)
+            {
+                throw new System.Exception();
+            }
+
+             _context.Remove(subAnswer);
+            await _context.SaveChangesAsync();
+        }
     }
 }
