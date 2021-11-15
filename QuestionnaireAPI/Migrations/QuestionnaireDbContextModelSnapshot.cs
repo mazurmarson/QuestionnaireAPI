@@ -19,23 +19,6 @@ namespace QuestionnaireAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("QuestionnaireAPI.Models.Answer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("Answers");
-                });
-
             modelBuilder.Entity("QuestionnaireAPI.Models.Question", b =>
                 {
                     b.Property<int>("Id")
@@ -126,15 +109,15 @@ namespace QuestionnaireAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AnswerId");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("SubAnswers");
                 });
@@ -161,17 +144,6 @@ namespace QuestionnaireAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("QuestionnaireAPI.Models.Answer", b =>
-                {
-                    b.HasOne("QuestionnaireAPI.Models.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("QuestionnaireAPI.Models.Question", b =>
@@ -220,18 +192,13 @@ namespace QuestionnaireAPI.Migrations
 
             modelBuilder.Entity("QuestionnaireAPI.Models.SubAnswer", b =>
                 {
-                    b.HasOne("QuestionnaireAPI.Models.Answer", "Answer")
-                        .WithMany("Subanswers")
-                        .HasForeignKey("AnswerId")
+                    b.HasOne("QuestionnaireAPI.Models.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Answer");
-                });
-
-            modelBuilder.Entity("QuestionnaireAPI.Models.Answer", b =>
-                {
-                    b.Navigation("Subanswers");
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("QuestionnaireAPI.Models.Questionnaire", b =>

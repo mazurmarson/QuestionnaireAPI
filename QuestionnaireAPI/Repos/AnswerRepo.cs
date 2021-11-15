@@ -54,7 +54,7 @@ namespace QuestionnaireAPI.Repos
             return questionAnswerOpen;
         }
 
-        public async Task<Answer> AddSubAnswer(int questionId,Answer answer)
+        public async Task<List<SubAnswer>> AddSubAnswer(int questionId,List<SubAnswer> subAnswers)
         {
             var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == questionId);
             if(question is null)
@@ -62,12 +62,28 @@ namespace QuestionnaireAPI.Repos
                 //Kod do obslugi jakby nie było takiego pytania
                 throw new System.Exception();
             }
-            answer.QuestionId = question.Id;
-            await _context.AddAsync(answer);
+            foreach(var subAnswer in subAnswers)
+            {
+                subAnswer.QuestionId = questionId;
+            }
+        
+            await _context.AddRangeAsync(subAnswers);
             await _context.SaveChangesAsync();
-            return answer;
+            return subAnswers;
 
 
+        }
+
+        public async Task DeleteSubAnswer(int subAnswerId)
+        {
+            var subAnswer = await _context.SubAnswers.FirstOrDefaultAsync(x => x.Id == subAnswerId);
+            if(subAnswer is null)
+            {
+                throw new System.Exception();
+            }
+
+             _context.Remove(subAnswer);
+            await _context.SaveChangesAsync();
         }
     }
 }

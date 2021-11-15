@@ -66,25 +66,6 @@ namespace QuestionnaireAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Answers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Answers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Answers_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OpenQuestionsAnswers",
                 columns: table => new
                 {
@@ -110,16 +91,16 @@ namespace QuestionnaireAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnswerId = table.Column<int>(type: "int", nullable: false),
+                    QuestionId = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SubAnswers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubAnswers_Answers_AnswerId",
-                        column: x => x.AnswerId,
-                        principalTable: "Answers",
+                        name: "FK_SubAnswers_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -144,11 +125,6 @@ namespace QuestionnaireAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answers_QuestionId",
-                table: "Answers",
-                column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CloseQuestionsAnswers_SubAnswerId",
                 table: "CloseQuestionsAnswers",
                 column: "SubAnswerId");
@@ -169,9 +145,9 @@ namespace QuestionnaireAPI.Migrations
                 column: "QuestionnaireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubAnswers_AnswerId",
+                name: "IX_SubAnswers_QuestionId",
                 table: "SubAnswers",
-                column: "AnswerId");
+                column: "QuestionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -184,9 +160,6 @@ namespace QuestionnaireAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "SubAnswers");
-
-            migrationBuilder.DropTable(
-                name: "Answers");
 
             migrationBuilder.DropTable(
                 name: "Questions");

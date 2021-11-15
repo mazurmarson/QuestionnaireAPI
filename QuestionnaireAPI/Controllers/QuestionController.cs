@@ -21,5 +21,12 @@ namespace QuestionnaireAPI.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("{questionId}")]
+        public async Task<ActionResult> DeleteQuestionnaire([FromRoute] int questionId)
+        {
+            await _repo.DeleteQuestion(questionId);
+            return Ok();
+        }
     }
 }

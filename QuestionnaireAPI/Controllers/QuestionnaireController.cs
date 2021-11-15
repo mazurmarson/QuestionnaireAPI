@@ -25,8 +25,13 @@ namespace QuestionnaireAPI.Controllers
            questionnaire.CreateDate = System.DateTime.Now;
             await _repo.AddQuestionnaire(questionnaire);
 
-            return Ok(user);
+            return Ok(questionnaire);
         }
-
+        [HttpDelete("{questionnaireId}")]
+        public async Task<ActionResult> DeleteQuestionnaire([FromRoute] int questionnaireId)
+        {
+            await _repo.DeleteQuestionnaire(questionnaireId);
+            return Ok();
+        }
     }
 }
