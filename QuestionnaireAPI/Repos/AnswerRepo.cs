@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using QuestionnaireAPI.Context;
+using QuestionnaireAPI.Exceptions;
 using QuestionnaireAPI.Models;
 
 namespace QuestionnaireAPI.Repos
@@ -60,7 +61,7 @@ namespace QuestionnaireAPI.Repos
             if(question is null)
             {
                 //Kod do obslugi jakby nie było takiego pytania
-                throw new System.Exception();
+                throw new NotFoundException("Question not found");
             }
             foreach(var subAnswer in subAnswers)
             {
