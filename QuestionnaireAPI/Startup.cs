@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using QuestionnaireAPI.Context;
+using QuestionnaireAPI.Middleware;
 using QuestionnaireAPI.Repos;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace QuestionnaireAPI
             services.AddScoped<IQuestionnaireRepo, QuestionnaireRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IAnswerRepo, AnswerRepo>();
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "QuestionnaireAPI", Version = "v1" });
@@ -51,7 +53,7 @@ namespace QuestionnaireAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "QuestionnaireAPI v1"));
             }
-
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
