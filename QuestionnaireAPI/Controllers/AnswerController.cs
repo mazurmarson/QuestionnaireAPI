@@ -16,9 +16,9 @@ namespace QuestionnaireAPI.Controllers
         }
 
         [HttpPost("subanswer")]
-        public async Task<ActionResult> AddSubAnswer([FromRoute] int questionId, [FromBody] Answer answer)
+        public async Task<ActionResult> AddSubAnswer([FromRoute] int questionId, [FromBody] List<SubAnswer> subAnswers)
         {
-            await _repo.AddSubAnswer(questionId, answer);
+            await _repo.AddSubAnswer(questionId, subAnswers);
 
             return Ok();
         }

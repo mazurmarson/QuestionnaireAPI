@@ -6,7 +6,7 @@ namespace QuestionnaireAPI.Repos
 {
     public interface IAnswerRepo
     {
-         Task<Answer> AddSubAnswer(int questionId,Answer answer);
+         Task<List<SubAnswer>> AddSubAnswer(int questionId,List<SubAnswer> subAnswers);
          Task<QuestionAnswerOpen> AddOpenAnswer(int questionId,QuestionAnswerOpen questionAnswerOpen);
          Task<List<QuestionAnswerClose>> AddCloseAnswer(int questionId, List<QuestionAnswerClose> questionAnswerCloseList);
     }
