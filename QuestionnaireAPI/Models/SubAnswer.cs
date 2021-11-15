@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace QuestionnaireAPI.Models
 {
     public class SubAnswer
@@ -6,5 +8,6 @@ namespace QuestionnaireAPI.Models
         public int AnswerId { get; set; }
         public Answer Answer { get; set; }
         public string Content { get; set; }
+        public List<QuestionAnswerClose> QuestionAnswerCloseList {get; set;}
     }
 }

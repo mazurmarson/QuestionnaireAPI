@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using QuestionnaireAPI.Context;
+using QuestionnaireAPI.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,11 @@ namespace QuestionnaireAPI
 
             services.AddControllers();
             services.AddDbContext<QuestionnaireDbContext>();
+            services.AddScoped<IGenRepo, GenRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IQuestionnaireRepo, QuestionnaireRepo>();
+            services.AddScoped<IQuestionRepo, QuestionRepo>();
+            services.AddScoped<IAnswerRepo, AnswerRepo>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "QuestionnaireAPI", Version = "v1" });
