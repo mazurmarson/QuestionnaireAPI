@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
@@ -14,11 +16,12 @@ namespace QuestionnaireAPI.Controllers
         {
             _repo = repo;
         }
-
+        [Authorize]
         [HttpPost("subanswer")]
         public async Task<ActionResult> AddSubAnswer([FromRoute] int questionId, [FromBody] List<SubAnswer> subAnswers)
         {
-            await _repo.AddSubAnswer(questionId, subAnswers);
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _repo.AddSubAnswer(questionId, subAnswers, userId);
 
             return Ok();
         }
@@ -34,15 +37,17 @@ namespace QuestionnaireAPI.Controllers
         [HttpPost("close")]
         public async Task<ActionResult> AddCloseAnswer([FromRoute] int questionId, [FromBody] List<QuestionAnswerClose> questionAnswerClosesList)
         {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             await _repo.AddCloseAnswer(questionId,questionAnswerClosesList);
 
             return Ok();
         }
-
+        [Authorize]
         [HttpDelete("{subAnswerId}")]
         public async Task<ActionResult> DeleteSubAnswer([FromRoute] int subAnswerId)
         {
-             await _repo.DeleteSubAnswer(subAnswerId);
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+             await _repo.DeleteSubAnswer(subAnswerId, userId);
 
             return Ok();
         }

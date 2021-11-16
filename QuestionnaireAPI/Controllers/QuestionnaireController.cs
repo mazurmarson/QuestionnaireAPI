@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
@@ -17,20 +19,22 @@ namespace QuestionnaireAPI.Controllers
             _repo = repo;
             _userRepo = userRepo;
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddQuestionnaire(Questionnaire questionnaire)
         {
-           var user = await _userRepo.GetUserById(questionnaire.UserId);
-           questionnaire.User = user;
-           questionnaire.CreateDate = System.DateTime.Now;
-            await _repo.AddQuestionnaire(questionnaire);
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            await _repo.AddQuestionnaire(questionnaire, userId);
 
             return Ok(questionnaire);
         }
+        [Authorize]
         [HttpDelete("{questionnaireId}")]
         public async Task<ActionResult> DeleteQuestionnaire([FromRoute] int questionnaireId)
         {
-            await _repo.DeleteQuestionnaire(questionnaireId);
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _repo.DeleteQuestionnaire(questionnaireId, userId);
             return Ok();
         }
     }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MOqlFl6jNOLNbmJkZ1kKkF9OGcKBmidaTTRh7IkdjWki9Iu8+Ch/8AtvLBGYz/zs4eHsZLqajl8C+erTFtMX9w==",
+  "dgSpecHash": "5eK2crhtwdjjYvYF1ZHfpkDav7+8ZRbLi7wf8SVR2j0Js1pz+YcHoP+CtouwJvdk8qiJUnmhxqroGzKYyPisnA==",
   "success": true,
-  "projectFilePath": "E:\\Nauka\\QuestionnaireAPI\\QuestionnaireAPI\\QuestionnaireAPI.csproj",
+  "projectFilePath": "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\QuestionnaireAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mazi2\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\mazi2\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

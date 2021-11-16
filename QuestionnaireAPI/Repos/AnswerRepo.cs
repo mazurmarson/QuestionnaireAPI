@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using QuestionnaireAPI.Context;
 using QuestionnaireAPI.Exceptions;
@@ -54,14 +55,20 @@ namespace QuestionnaireAPI.Repos
 
             return questionAnswerOpen;
         }
-
-        public async Task<List<SubAnswer>> AddSubAnswer(int questionId,List<SubAnswer> subAnswers)
+  
+        public async Task<List<SubAnswer>> AddSubAnswer(int questionId,List<SubAnswer> subAnswers, int userId)
         {
+            
             var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == questionId);
             if(question is null)
             {
                 //Kod do obslugi jakby nie było takiego pytania
                 throw new NotFoundException("Question not found");
+            }
+            var questionnaireOwnerId = await _context.Questionnaires.Where( x=> x.Id == question.QuestionnaireId ).Select(x => x.UserId).FirstOrDefaultAsync();
+            if(questionnaireOwnerId != userId)
+            {
+                throw new UnauthorizedException("Unauthorized, is not your question");
             }
             foreach(var subAnswer in subAnswers)
             {
@@ -74,13 +81,19 @@ namespace QuestionnaireAPI.Repos
 
 
         }
-
-        public async Task DeleteSubAnswer(int subAnswerId)
+  
+        public async Task DeleteSubAnswer(int subAnswerId, int userId)
         {
             var subAnswer = await _context.SubAnswers.FirstOrDefaultAsync(x => x.Id == subAnswerId);
             if(subAnswer is null)
             {
-                throw new System.Exception();
+                throw new NotFoundException("Subanswer not found");
+            }
+            var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == subAnswer.QuestionId);
+                var questionnaireOwnerId = await _context.Questionnaires.Where( x=> x.Id == question.QuestionnaireId ).Select(x => x.UserId).FirstOrDefaultAsync();
+            if(questionnaireOwnerId != userId)
+            {
+                throw new UnauthorizedException("Unauthorized, is not your question");
             }
 
              _context.Remove(subAnswer);
