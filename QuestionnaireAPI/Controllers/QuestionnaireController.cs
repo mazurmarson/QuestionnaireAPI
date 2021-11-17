@@ -37,5 +37,27 @@ namespace QuestionnaireAPI.Controllers
             await _repo.DeleteQuestionnaire(questionnaireId, userId);
             return Ok();
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetQuestionnaires()
+        {
+            var questionnaries = await _repo.GetQuestionnaires();
+
+            return Ok(questionnaries);
+        }
+
+        [HttpGet("{questionnaireId}")]
+        public async Task<ActionResult> GetQuestionnaire([FromRoute] int questionnaireId)
+        {
+            var questionnaire = await _repo.GetQuestionnaire(questionnaireId);
+            return Ok(questionnaire);
+        }
+
+        [HttpGet("{questionnaireId}/results")]
+        public async Task<ActionResult> GetQuestionnaireResults([FromRoute] int questionnaireId)
+        {
+            var results = await _repo.GetQuestionnaireResults(questionnaireId);
+            return Ok(results);
+        }
     }
 }

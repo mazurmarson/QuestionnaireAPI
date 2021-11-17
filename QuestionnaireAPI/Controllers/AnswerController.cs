@@ -37,7 +37,7 @@ namespace QuestionnaireAPI.Controllers
         [HttpPost("close")]
         public async Task<ActionResult> AddCloseAnswer([FromRoute] int questionId, [FromBody] List<QuestionAnswerClose> questionAnswerClosesList)
         {
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+      
             await _repo.AddCloseAnswer(questionId,questionAnswerClosesList);
 
             return Ok();

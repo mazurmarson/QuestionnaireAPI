@@ -59,3 +59,9 @@ E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\obj\Debug\net5.0\ref\QuestionnaireAPI
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\obj\Debug\net5.0\QuestionnaireAPI.pdb
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\obj\Debug\net5.0\QuestionnaireAPI.genruntimeconfig.cache
 E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\AutoMapper.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Newtonsoft.Json.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

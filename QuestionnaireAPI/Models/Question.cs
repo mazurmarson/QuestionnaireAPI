@@ -9,6 +9,8 @@ namespace QuestionnaireAPI.Models
         public string QuestionContent { get; set; }
         public int QuestionnaireId { get; set; }
         public Questionnaire Questionnaire { get; set; }
+        public List<SubAnswer> SubAnswers {get; set;}
+        public List<QuestionAnswerOpen> OpenQuestionAnswerList {get; set;}
 
     }
 }
