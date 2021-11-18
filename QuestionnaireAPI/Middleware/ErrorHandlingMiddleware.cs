@@ -27,6 +27,11 @@ namespace QuestionnaireAPI.Middleware
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync(resourceDoesExistException.Message);
             }
+            catch (ValidationException validationException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(validationException.Message);
+            }
             catch(UnauthorizedException unauthorizedException)
             {
                 context.Response.StatusCode = 401;
