@@ -107,9 +107,15 @@ namespace QuestionnaireAPI.Repos
             return questionnaireDetailsDto;
         }
 
-        public async Task<IEnumerable<QuestionInQuestionnaireResultsCloseDto>> GetQuestionnaireResults(int questionnaireId)
+        public async Task<QuestionnaireResultsDto> GetQuestionnaireResults(int questionnaireId)
         {
-            var questionnaireOpenQuestionsResults = await _context.Questions.Where(x => x.QuestionnaireId == questionnaireId)
+            QuestionnaireResultsDto questionnaireResultsDto = await _context.Questionnaires.Where(x => x.Id == questionnaireId).Select(x => new QuestionnaireResultsDto{
+                Id = x.Id,
+                Name = x.Name,
+                CreateDate = x.CreateDate
+            }).FirstOrDefaultAsync();
+       
+            var questionnaireOpenQuestionsResults = await _context.Questions.Where(x => x.QuestionnaireId == questionnaireId && x.QuestionType == QuestionType.Open)
             .Include(x => x.OpenQuestionAnswerList).Select(x => new QuestionInQuestionnaireResultsOpenDto{
                 Id = x.Id,
                 QuestionType = x.QuestionType,
@@ -120,15 +126,22 @@ namespace QuestionnaireAPI.Repos
                 }).ToList()
             }).ToListAsync();
 
-            var questionnaireClosedQuestionsResults = await _context.Questions.Where(x => x.QuestionnaireId == questionnaireId)
+            var questionnaireClosedQuestionsResults = await _context.Questions.Where(x => x.QuestionnaireId == questionnaireId && x.QuestionType != QuestionType.Open)
             .Include(x => x.SubAnswers).ThenInclude(x => x.QuestionAnswerCloseList).Select(x => new QuestionInQuestionnaireResultsCloseDto{
                 Id = x.Id,
                 QuestionContent = x.QuestionContent,
                 QuestionType = x.QuestionType,
-                SubAnswers = x.SubAnswers
+                SubAnswers = x.SubAnswers.Select(z => new SubAnswerInQuestionnaireResultDto{
+                    Id = z.Id,
+                    Content = z.Content,
+                    AmountOfAnswers = z.QuestionAnswerCloseList.Count()
+                }).ToList()
             }).ToListAsync();
 
-            return questionnaireClosedQuestionsResults;
+            questionnaireResultsDto.OpenQuestionResults = questionnaireOpenQuestionsResults;
+            questionnaireResultsDto.CloseQuestionsResults = questionnaireClosedQuestionsResults;
+
+            return questionnaireResultsDto;
 
         }
     }

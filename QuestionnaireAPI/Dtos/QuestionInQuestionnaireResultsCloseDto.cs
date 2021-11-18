@@ -9,7 +9,7 @@ namespace QuestionnaireAPI.Dtos
         public QuestionType QuestionType { get; set; }
         public string QuestionContent { get; set; }
 
-        public List<SubAnswer> SubAnswers {get; set;}
+        public List<SubAnswerInQuestionnaireResultDto> SubAnswers {get; set;}
         
     }
 }

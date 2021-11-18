@@ -13,7 +13,7 @@ namespace QuestionnaireAPI.Repos
          
          Task<QuestionnaireDetailsDto> GetQuestionnaire(int questionnaireId);
 
-         Task<IEnumerable<QuestionInQuestionnaireResultsCloseDto>> GetQuestionnaireResults(int questionnaireId);
+         Task<QuestionnaireResultsDto> GetQuestionnaireResults(int questionnaireId);
         
 
        // Task<List<Questionnaire>> GetQuestionnaire(int questionnaireId);
