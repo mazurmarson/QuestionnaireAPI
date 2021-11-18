@@ -1,4 +1,6 @@
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +16,7 @@ using QuestionnaireAPI.Context;
 using QuestionnaireAPI.Middleware;
 using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
+using QuestionnaireAPI.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,9 +56,10 @@ namespace QuestionnaireAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
                 };
             });
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers()
+            .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+).AddFluentValidation();
             services.AddDbContext<QuestionnaireDbContext>();
             services.AddScoped<IGenRepo, GenRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
@@ -63,6 +67,7 @@ namespace QuestionnaireAPI
             services.AddScoped<IQuestionnaireRepo, QuestionnaireRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IAnswerRepo, AnswerRepo>();
+            services.AddScoped<IValidator<QuestionAnswerOpen>, AddOpenAnswersValidator>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddSwaggerGen(c =>

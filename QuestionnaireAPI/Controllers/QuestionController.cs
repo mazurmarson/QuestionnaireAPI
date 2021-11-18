@@ -8,6 +8,7 @@ using QuestionnaireAPI.Repos;
 namespace QuestionnaireAPI.Controllers
 {
     [Route("api/questionnaire/{questionnaireId}/[controller]")]
+    [ApiController]
     public class QuestionController : ControllerBase
     {
         private readonly IQuestionRepo _repo;

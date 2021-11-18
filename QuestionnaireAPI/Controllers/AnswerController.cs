@@ -9,9 +9,9 @@ using QuestionnaireAPI.Repos;
 namespace QuestionnaireAPI.Controllers
 {
     [Route("api/questionnaire/{questionnaireId}/question/{questionId}/[controller]")]
+    [ApiController]
     public class AnswerController : ControllerBase
-    {
-        private readonly IAnswerRepo _repo;
+    {       private readonly IAnswerRepo _repo;
         public AnswerController(IAnswerRepo repo)
         {
             _repo = repo;

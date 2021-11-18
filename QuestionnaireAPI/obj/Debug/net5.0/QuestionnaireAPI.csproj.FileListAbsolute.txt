@@ -65,3 +65,6 @@ E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Microsoft.AspNetCore
 E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Newtonsoft.Json.dll
 E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\FluentValidation.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\FluentValidation.AspNetCore.dll
+E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\FluentValidation.DependencyInjectionExtensions.dll

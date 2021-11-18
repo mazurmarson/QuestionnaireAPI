@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "6OzM7pnF7s2cbYsTKcC+ct8uVAy2bLSxLXjMk03CJRszm3GEX6FT2+4qlKds+vWZZkfbzi73UVbOr6M0ru3X0Q==",
+  "dgSpecHash": "96hPyxYad/EBOGWgt95BqMZfKGQZrrJQ3SL8ZgOY2BEGeL3VIz734lxHPLyB8F1N/vlEhorR6kX3gfLcSnlgRQ==",
   "success": true,
   "projectFilePath": "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\QuestionnaireAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mazi2\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\mazi2\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
+    "C:\\Users\\mazi2\\.nuget\\packages\\fluentvalidation\\10.3.4\\fluentvalidation.10.3.4.nupkg.sha512",
+    "C:\\Users\\mazi2\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.3.4\\fluentvalidation.aspnetcore.10.3.4.nupkg.sha512",
+    "C:\\Users\\mazi2\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.4\\fluentvalidation.dependencyinjectionextensions.10.3.4.nupkg.sha512",
     "C:\\Users\\mazi2\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\mazi2\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\mazi2\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
