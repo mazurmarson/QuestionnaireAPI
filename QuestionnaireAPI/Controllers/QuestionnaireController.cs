@@ -19,7 +19,7 @@ namespace QuestionnaireAPI.Controllers
             _repo = repo;
             _userRepo = userRepo;
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> AddQuestionnaire(Questionnaire questionnaire)
         {

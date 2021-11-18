@@ -9,6 +9,7 @@ namespace QuestionnaireAPI.Models
         public string Name { get; set; }  
         public string Mail { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public UserType UserType {get; set;}
         public string PasswordHash { get; set; }
         public List<Questionnaire> Questionnaires {get; set;} 
     }

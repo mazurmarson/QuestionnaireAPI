@@ -47,7 +47,9 @@ namespace QuestionnaireAPI.Repos
             {
                 Name = registerUserDto.Name,
                 Mail = registerUserDto.Mail,
-                DateOfBirth = registerUserDto.DateOfBirth
+                DateOfBirth = registerUserDto.DateOfBirth,
+                UserType = registerUserDto.UserType
+                
             };
             var password = registerUserDto.Password;
             var hashedPassword = _passwordHasher.HashPassword(user, password);
@@ -83,6 +85,7 @@ namespace QuestionnaireAPI.Repos
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.Name}"),
+                new Claim(ClaimTypes.Role, user.UserType.ToString())     
                 //Tu bedzie można dodać role
             };
 

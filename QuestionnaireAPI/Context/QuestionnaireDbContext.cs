@@ -5,7 +5,7 @@ namespace QuestionnaireAPI.Context
 {
     public class QuestionnaireDbContext : DbContext
     {
-        private string _connectionString = "Server=DESKTOP-A0EEVH8\\SQLEXPRESS;Database=QuestionnaireAPIDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private string _connectionString = "Server=DESKTOP-A0EEVH8\\SQLEXPRESS;Database=QuestionnaireAPIDB2;Trusted_Connection=True;MultipleActiveResultSets=true";
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionAnswerOpen> OpenQuestionsAnswers { get; set; }
         public DbSet<QuestionAnswerClose> CloseQuestionsAnswers { get; set; }

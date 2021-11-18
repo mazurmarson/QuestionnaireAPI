@@ -16,7 +16,7 @@ namespace QuestionnaireAPI.Controllers
         {
             _repo = repo;
         }
-        [Authorize]
+        
         [HttpPost]
         public async Task<ActionResult> AddQuestion([FromRoute] int questionnaireId,[FromBody]Question question)
         {
