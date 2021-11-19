@@ -19,6 +19,10 @@ namespace QuestionnaireAPI.Mapper
 
             CreateMap<QuestionnaireAddDto, Question>();
             CreateMap<Question, QuestionnaireAddDto>();
+            CreateMap<SubAnswer, SubAnswerAddDto>();
+            CreateMap<SubAnswerAddDto, SubAnswer>();
+            CreateMap<QuestionAnswerClose, QuestionAnswerCloseAddDto>();
+            CreateMap<QuestionAnswerCloseAddDto, QuestionAnswerClose>();
            
             
         }

@@ -34,11 +34,8 @@ namespace QuestionnaireAPI.Controllers
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             string userRole = (User.FindFirst(ClaimTypes.Role).Value);
-            UserType userRoleEnum = (UserType)Enum.Parse(typeof(UserType),userRole, true);
-            var userIdAndRole = new UserIdAndRole{
-                UserId = userId,
-                UserType = userRoleEnum
-            };
+            
+            var userIdAndRole = Utils.VariablesToUserIdAndRole(userId, userRole);
             await _repo.DeleteQuestion(questionId, userIdAndRole);
             return Ok();
         }

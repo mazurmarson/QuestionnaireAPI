@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QuestionnaireAPI.Context;
 using QuestionnaireAPI.Dtos;
@@ -12,10 +14,12 @@ namespace QuestionnaireAPI.Repos
     public class QuestionRepo : GenRepo, IQuestionRepo
     {
         private readonly QuestionnaireDbContext _context;
+        private readonly IMapper _mapper; 
 
-        public QuestionRepo(QuestionnaireDbContext context):base(context)
+        public QuestionRepo(QuestionnaireDbContext context, IMapper mapper):base(context)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<Question> AddQuestion(int questionnaireId, QuestionAddDto questionAddDto, int userId) 
         {
@@ -32,7 +36,7 @@ namespace QuestionnaireAPI.Repos
                 QuestionType = questionAddDto.QuestionType,
                 QuestionContent = questionAddDto.QuestionContent,
                 QuestionnaireId = questionnaireId,
-                SubAnswers = questionAddDto.SubAnswers,
+                SubAnswers = _mapper.Map<List<SubAnswer>>(questionAddDto.SubAnswers),
                 OpenQuestionAnswerList = questionAddDto.OpenQuestionAnswerList
             };
 

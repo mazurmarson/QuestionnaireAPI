@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using QuestionnaireAPI.Context;
+using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Exceptions;
+using QuestionnaireAPI.Helpers;
 using QuestionnaireAPI.Models;
 
 namespace QuestionnaireAPI.Repos
@@ -12,12 +15,14 @@ namespace QuestionnaireAPI.Repos
     public class AnswerRepo : GenRepo, IAnswerRepo
     {
         private readonly QuestionnaireDbContext _context;
-        public AnswerRepo(QuestionnaireDbContext context) : base(context)
+        private readonly IMapper _mapper;
+        public AnswerRepo(QuestionnaireDbContext context, IMapper mapper) : base(context)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<List<QuestionAnswerClose>> AddCloseAnswer(int questionId, List<QuestionAnswerClose> questionAnswerCloseList)
+        public async Task<List<QuestionAnswerClose>> AddCloseAnswer(int questionId, List<QuestionAnswerCloseAddDto> questionAnswerCloseAddDto)
         {
             var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == questionId);
             if (question is null)
@@ -28,6 +33,24 @@ namespace QuestionnaireAPI.Repos
             if (question.QuestionType == QuestionType.Open)
             {
                 throw new ValidationException("Wrong question type, this question is not open");
+            }
+            var questionAnswerCloseList = _mapper.Map<List<QuestionAnswerClose>>(questionAnswerCloseAddDto);
+            var subAnswers = await _context.SubAnswers.Where(x => x.QuestionId == questionId).ToListAsync();
+            
+            bool wrongSubAnswersId = false;
+            questionAnswerCloseList = questionAnswerCloseList.GroupBy(x => x.SubAnswerId).Select(z => z.FirstOrDefault()).ToList();
+            foreach(var closeAnswer in questionAnswerCloseList)
+            {
+                if(!(subAnswers.Select(x => x.Id).Contains(closeAnswer.SubAnswerId)))
+                    wrongSubAnswersId = true;
+
+                System.Console.WriteLine(closeAnswer);
+                
+            }
+
+            if(wrongSubAnswersId == true)
+            {
+                throw new ValidationException("Some subanswer is not from this question");
             }
 
             if (question.QuestionType == QuestionType.Single)
@@ -56,12 +79,12 @@ namespace QuestionnaireAPI.Repos
 
             await _context.AddRangeAsync(questionAnswerCloseList);
             await _context.SaveChangesAsync();
-
+           
             return questionAnswerCloseList;
 
         }
 
-        public async Task<QuestionAnswerOpen> AddOpenAnswer(int questionId, QuestionAnswerOpen questionAnswerOpen)
+        public async Task<QuestionAnswerOpen> AddOpenAnswer(int questionId, QuestionAnswerContentAddDto questionAnswerContentAddDtoValidator)
         {
             var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == questionId);
             if (question is null)
@@ -72,30 +95,43 @@ namespace QuestionnaireAPI.Repos
             {
                 throw new ValidationException("Wrong question type, this question is not open");
             }
-            questionAnswerOpen.QuestionId = questionId;
-            await _context.AddAsync(questionAnswerOpen);
+            var openAnswer = new QuestionAnswerOpen{
+                QuestionId = question.Id,
+                AnswerContent = questionAnswerContentAddDtoValidator.AnswerContent
+            };
+            
+            await _context.AddAsync(openAnswer);
             await _context.SaveChangesAsync();
 
-            return questionAnswerOpen;
+            return openAnswer;
         }
 
-        public async Task<List<SubAnswer>> AddSubAnswer(int questionId, List<SubAnswer> subAnswers, int userId)
+        public async Task<List<SubAnswer>> AddSubAnswer(int questionId, List<SubAnswerAddDto> subAnswersAddDto, int userId)
         {
-
+            List<SubAnswer> subAnswers = new List<SubAnswer>();
             var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == questionId);
             if (question is null)
             {
-                //Kod do obslugi jakby nie było takiego pytania
+                
                 throw new NotFoundException("Question not found");
+            }
+            if(question.QuestionType == QuestionType.Open)
+            {
+                throw new ValidationException("Can not add subanswers, question type is open");
             }
             var questionnaireOwnerId = await _context.Questionnaires.Where(x => x.Id == question.QuestionnaireId).Select(x => x.UserId).FirstOrDefaultAsync();
             if (questionnaireOwnerId != userId)
             {
                 throw new UnauthorizedException("Unauthorized, is not your question");
             }
-            foreach (var subAnswer in subAnswers)
+            foreach (var subAnswer in subAnswersAddDto)
             {
-                subAnswer.QuestionId = questionId;
+                subAnswers.Add(new SubAnswer{
+                    QuestionId = questionId,
+                    Content = subAnswer.Content
+                }
+                );
+
             }
 
             await _context.AddRangeAsync(subAnswers);
@@ -105,7 +141,7 @@ namespace QuestionnaireAPI.Repos
 
         }
 
-        public async Task DeleteSubAnswer(int subAnswerId, int userId)
+        public async Task DeleteSubAnswer(int subAnswerId, UserIdAndRole userIdAndRole)
         {
             var subAnswer = await _context.SubAnswers.FirstOrDefaultAsync(x => x.Id == subAnswerId);
             if (subAnswer is null)
@@ -114,7 +150,8 @@ namespace QuestionnaireAPI.Repos
             }
             var question = await _context.Questions.FirstOrDefaultAsync(x => x.Id == subAnswer.QuestionId);
             var questionnaireOwnerId = await _context.Questionnaires.Where(x => x.Id == question.QuestionnaireId).Select(x => x.UserId).FirstOrDefaultAsync();
-            if (questionnaireOwnerId != userId)
+
+            if (questionnaireOwnerId != userIdAndRole.UserId && userIdAndRole.UserType != UserType.Admin)
             {
                 throw new UnauthorizedException("Unauthorized, is not your question");
             }

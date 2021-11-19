@@ -67,10 +67,12 @@ namespace QuestionnaireAPI
             services.AddScoped<IQuestionnaireRepo, QuestionnaireRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IAnswerRepo, AnswerRepo>();
+            services.AddScoped<IValidator<QuestionAnswerContentAddDto>,QuestionAnswerContentAddDtoValidator>();
             services.AddScoped<IValidator<QuestionAddDto> ,QuestionAddDtoValidator>();
             services.AddScoped<IValidator<QuestionnaireAddDto> ,QuestionnaireAddDtoValidator>();
             services.AddScoped<IValidator<QuestionAnswerOpen>, AddOpenAnswersValidator>();
             services.AddScoped<IValidator<RegisterUserDto>, RegisterDtoValidator>();
+            services.AddScoped<IValidator<List<SubAnswerAddDto>>, SubAnswerAddValidatior>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddSwaggerGen(c =>

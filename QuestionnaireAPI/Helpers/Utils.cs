@@ -1,3 +1,6 @@
+using System;
+using QuestionnaireAPI.Models;
+
 namespace QuestionnaireAPI.Helpers
 {
     public static class Utils
@@ -10,6 +13,17 @@ namespace QuestionnaireAPI.Helpers
         else
             return false;
                 
+    }
+
+    public static UserIdAndRole VariablesToUserIdAndRole(int userId, string userRole)
+    {
+                    UserType userRoleEnum = (UserType)Enum.Parse(typeof(UserType),userRole, true);
+            var userIdAndRole = new UserIdAndRole{
+                UserId = userId,
+                UserType = userRoleEnum
+            };
+
+            return userIdAndRole;
     }
     }
 }

@@ -15,6 +15,11 @@ namespace QuestionnaireAPI.Validators
                     context.AddFailure("QuestionType", "Wrong question type");
                 }
             });
+            RuleForEach(x => x.SubAnswers).ChildRules(subanswers => {
+                subanswers.RuleFor(x => x.Content).MaximumLength(100).MinimumLength(1).NotNull();
+            });
         }
+
+
     }
 }
