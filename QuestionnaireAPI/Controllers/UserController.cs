@@ -1,8 +1,11 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
+using System;
 
 namespace QuestionnaireAPI.Controllers
 {
@@ -16,13 +19,16 @@ namespace QuestionnaireAPI.Controllers
          {
              _repo = repo;
          }
+ 
 
          [HttpPost("register")]
          public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
          {
+               
             await _repo.Register(registerUserDto);
             return StatusCode(201);
          }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)

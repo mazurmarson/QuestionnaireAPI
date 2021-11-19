@@ -16,6 +16,9 @@ namespace QuestionnaireAPI.Mapper
              .ForMember(x => x.SubAnswers, x => x.MapFrom(x => x.SubAnswers));
 
             CreateMap<SubAnswer,SubAnswerInQuestionnaireDto>();
+
+            CreateMap<QuestionnaireAddDto, Question>();
+            CreateMap<Question, QuestionnaireAddDto>();
            
             
         }

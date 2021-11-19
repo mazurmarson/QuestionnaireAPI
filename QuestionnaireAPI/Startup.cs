@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuestionnaireAPI.Context;
+using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Middleware;
 using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
@@ -38,7 +39,6 @@ namespace QuestionnaireAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-    
             var authenticationSettings = new AuthenticationSettings();
             Configuration.GetSection("Authentication").Bind(authenticationSettings);
             services.AddSingleton(authenticationSettings);
@@ -59,7 +59,7 @@ namespace QuestionnaireAPI
             services.AddControllers()
             .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-).AddFluentValidation();
+).AddFluentValidation(x => ValidatorOptions.Global.LanguageManager.Enabled = false);
             services.AddDbContext<QuestionnaireDbContext>();
             services.AddScoped<IGenRepo, GenRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
@@ -67,7 +67,10 @@ namespace QuestionnaireAPI
             services.AddScoped<IQuestionnaireRepo, QuestionnaireRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IAnswerRepo, AnswerRepo>();
+            services.AddScoped<IValidator<QuestionAddDto> ,QuestionAddDtoValidator>();
+            services.AddScoped<IValidator<QuestionnaireAddDto> ,QuestionnaireAddDtoValidator>();
             services.AddScoped<IValidator<QuestionAnswerOpen>, AddOpenAnswersValidator>();
+            services.AddScoped<IValidator<RegisterUserDto>, RegisterDtoValidator>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddSwaggerGen(c =>
