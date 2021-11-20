@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuestionnaireAPI.Seed;
 
 namespace QuestionnaireAPI
 {
@@ -61,6 +62,7 @@ namespace QuestionnaireAPI
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 ).AddFluentValidation(x => ValidatorOptions.Global.LanguageManager.Enabled = false);
             services.AddDbContext<QuestionnaireDbContext>();
+            services.AddTransient<Seeder>();
             services.AddScoped<IGenRepo, GenRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -82,7 +84,7 @@ namespace QuestionnaireAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -91,6 +93,10 @@ namespace QuestionnaireAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "QuestionnaireAPI v1"));
             }
             app.UseMiddleware<ErrorHandlingMiddleware>();
+       //      seeder.SeedUsers();
+       //     seeder.SeedQuestionnaries();
+       //     seeder.SeedCloseQuestionsAnswers();
+       seeder.SeedOpenQuestionsAnswers();
             app.UseAuthentication();
             app.UseHttpsRedirection();
 

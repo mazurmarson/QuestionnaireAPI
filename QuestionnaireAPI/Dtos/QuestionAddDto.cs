@@ -10,6 +10,6 @@ namespace QuestionnaireAPI.Dtos
         public string QuestionContent { get; set; }
 
         public List<SubAnswerAddDto> SubAnswers {get; set;}
-        public List<QuestionAnswerOpen> OpenQuestionAnswerList {get; set;}
+      //  public List<QuestionAnswerOpen> OpenQuestionAnswerList {get; set;}
     }
 }

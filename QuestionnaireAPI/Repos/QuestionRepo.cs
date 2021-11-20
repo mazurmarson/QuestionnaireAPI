@@ -37,7 +37,7 @@ namespace QuestionnaireAPI.Repos
                 QuestionContent = questionAddDto.QuestionContent,
                 QuestionnaireId = questionnaireId,
                 SubAnswers = _mapper.Map<List<SubAnswer>>(questionAddDto.SubAnswers),
-                OpenQuestionAnswerList = questionAddDto.OpenQuestionAnswerList
+           //     OpenQuestionAnswerList = questionAddDto.OpenQuestionAnswerList
             };
 
             await _context.AddAsync(question);

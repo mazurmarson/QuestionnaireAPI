@@ -10,7 +10,7 @@ using QuestionnaireAPI.Context;
 namespace QuestionnaireAPI.Migrations
 {
     [DbContext(typeof(QuestionnaireDbContext))]
-    [Migration("20211118140454_InitialCreate")]
+    [Migration("20211120201410_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
