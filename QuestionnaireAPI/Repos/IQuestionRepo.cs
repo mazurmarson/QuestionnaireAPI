@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
+using QuestionnaireAPI.Dtos;
+using QuestionnaireAPI.Helpers;
 using QuestionnaireAPI.Models;
 
 namespace QuestionnaireAPI.Repos
 {
     public interface IQuestionRepo : IGenRepo
     {
-         Task<Question> AddQuestion(int questionnaireId,Question question, int userId);
-         Task DeleteQuestion(int questionId, int userId);
+         Task<Question> AddQuestion(int questionnaireId,QuestionAddDto question, int userId);
+         Task DeleteQuestion(int questionId, UserIdAndRole userIdAndRole);
     }
 }

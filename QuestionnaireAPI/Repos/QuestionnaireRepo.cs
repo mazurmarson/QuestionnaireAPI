@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using QuestionnaireAPI.Context;
 using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Exceptions;
+using QuestionnaireAPI.Helpers;
 using QuestionnaireAPI.Models;
 
 namespace QuestionnaireAPI.Repos
@@ -22,29 +23,35 @@ namespace QuestionnaireAPI.Repos
 
 
 
-        public async Task<Questionnaire> AddQuestionnaire(Questionnaire questionnaire, int userId)
+        public async Task<Questionnaire> AddQuestionnaire(QuestionnaireAddDto questionnaireAddDto, int userId)
         {
           var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if(user is null)
             {
                 throw new NotFoundException("This user does not exist");
             }
-           questionnaire.User = user;
-           questionnaire.CreateDate = System.DateTime.Now;
+            var questionnaire = new Questionnaire{
+                Name = questionnaireAddDto.Name,
+                CreateDate = System.DateTime.Now,
+                User = user,
+                Questions = _mapper.Map<List<Question>>(questionnaireAddDto.Questions)
+            };
+
             await _context.AddAsync(questionnaire);
             await _context.SaveChangesAsync();
 
             return questionnaire;
         }
 
-        public async Task DeleteQuestionnaire(int questionnaireId, int userId)
+        public async Task DeleteQuestionnaire(int questionnaireId, UserIdAndRole userIdAndRole)
         {
             var questionnaire = await _context.Questionnaires.FirstOrDefaultAsync(x => x.Id == questionnaireId);
+          
             if(questionnaire is null)
             {
                 throw new NotFoundException("This questionnaire does not exist");
             }
-            if(questionnaire.UserId != userId)
+            if(questionnaire.UserId != userIdAndRole.UserId && userIdAndRole.UserType != UserType.Admin)
             {
                 throw new UnauthorizedException("This resource is not your");
             }

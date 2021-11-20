@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "96hPyxYad/EBOGWgt95BqMZfKGQZrrJQ3SL8ZgOY2BEGeL3VIz734lxHPLyB8F1N/vlEhorR6kX3gfLcSnlgRQ==",
+  "dgSpecHash": "0lWRDuKv4JRE1cBomigJzHYQyGogHqo/5bhCYzHD+MVAtkgpP/2GI1N+ULW9bsaq3+M1ED+JSVqhi8fHwqcUaA==",
   "success": true,
-  "projectFilePath": "E:\\Nauka\\QuestionnaireAPI\\questionnaireAPI\\QuestionnaireAPI.csproj",
+  "projectFilePath": "E:\\Nauka\\QuestionnaireAPI\\QuestionnaireAPI\\QuestionnaireAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mazi2\\.nuget\\packages\\automapper\\10.1.0\\automapper.10.1.0.nupkg.sha512",
     "C:\\Users\\mazi2\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",

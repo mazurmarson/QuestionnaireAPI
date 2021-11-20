@@ -13,6 +13,7 @@ using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Exceptions;
 using QuestionnaireAPI.Models;
 
+
 namespace QuestionnaireAPI.Repos
 {
     public class UserRepo : GenRepo, IUserRepo
@@ -21,25 +22,26 @@ namespace QuestionnaireAPI.Repos
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
 
-        public UserRepo(QuestionnaireDbContext context, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings):base(context)
+        public UserRepo(QuestionnaireDbContext context, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings) : base(context)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
-            
+
         }
 
 
         public async Task Register(RegisterUserDto registerUserDto)
         {
             bool nameExist = await _context.Users.AnyAsync(x => x.Name == registerUserDto.Name);
-            if(nameExist)
+
+            if (nameExist)
             {
                 throw new ResourceDoesExistException("This name is already in use");
             }
-            
+
             bool mailExist = await _context.Users.AnyAsync(x => x.Mail == registerUserDto.Mail);
-            if(mailExist)
+            if (mailExist)
             {
                 throw new ResourceDoesExistException("This mail is already in use");
             }
@@ -48,8 +50,8 @@ namespace QuestionnaireAPI.Repos
                 Name = registerUserDto.Name,
                 Mail = registerUserDto.Mail,
                 DateOfBirth = registerUserDto.DateOfBirth,
-                UserType = registerUserDto.UserType
-                
+                UserType = UserType.User
+
             };
             var password = registerUserDto.Password;
             var hashedPassword = _passwordHasher.HashPassword(user, password);
@@ -57,7 +59,7 @@ namespace QuestionnaireAPI.Repos
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
 
-           
+
         }
 
         public async Task<User> GetUserById(int id)
@@ -66,17 +68,17 @@ namespace QuestionnaireAPI.Repos
             return user;
         }
 
-                public async Task<string> GenerateJwt(LoginDto dto)
+        public async Task<string> GenerateJwt(LoginDto dto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Mail == dto.Mail);
 
-            if(user is null)
+            if (user is null)
             {
                 throw new NotFoundException("Inavalid username or password");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
-            if(result == PasswordVerificationResult.Failed)
+            if (result == PasswordVerificationResult.Failed)
             {
                 throw new NotFoundException("Inavalid username or password");
             }
@@ -92,14 +94,14 @@ namespace QuestionnaireAPI.Repos
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        //     if(user is null)
-        //     {
-        //         throw new BadReqyuest
-        //     }
-        // }
+            //     if(user is null)
+            //     {
+            //         throw new BadReqyuest
+            //     }
+            // }
             var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
 
-            var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials:cred);
+            var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);

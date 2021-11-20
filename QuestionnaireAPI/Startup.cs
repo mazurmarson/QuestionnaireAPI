@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuestionnaireAPI.Context;
+using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Middleware;
 using QuestionnaireAPI.Models;
 using QuestionnaireAPI.Repos;
@@ -22,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuestionnaireAPI.Seed;
 
 namespace QuestionnaireAPI
 {
@@ -38,7 +40,6 @@ namespace QuestionnaireAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-    
             var authenticationSettings = new AuthenticationSettings();
             Configuration.GetSection("Authentication").Bind(authenticationSettings);
             services.AddSingleton(authenticationSettings);
@@ -59,15 +60,21 @@ namespace QuestionnaireAPI
             services.AddControllers()
             .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-).AddFluentValidation();
+).AddFluentValidation(x => ValidatorOptions.Global.LanguageManager.Enabled = false);
             services.AddDbContext<QuestionnaireDbContext>();
+            services.AddTransient<Seeder>();
             services.AddScoped<IGenRepo, GenRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IQuestionnaireRepo, QuestionnaireRepo>();
             services.AddScoped<IQuestionRepo, QuestionRepo>();
             services.AddScoped<IAnswerRepo, AnswerRepo>();
+            services.AddScoped<IValidator<QuestionAnswerContentAddDto>,QuestionAnswerContentAddDtoValidator>();
+            services.AddScoped<IValidator<QuestionAddDto> ,QuestionAddDtoValidator>();
+            services.AddScoped<IValidator<QuestionnaireAddDto> ,QuestionnaireAddDtoValidator>();
             services.AddScoped<IValidator<QuestionAnswerOpen>, AddOpenAnswersValidator>();
+            services.AddScoped<IValidator<RegisterUserDto>, RegisterDtoValidator>();
+            services.AddScoped<IValidator<List<SubAnswerAddDto>>, SubAnswerAddValidatior>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddSwaggerGen(c =>
@@ -77,7 +84,7 @@ namespace QuestionnaireAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -86,6 +93,10 @@ namespace QuestionnaireAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "QuestionnaireAPI v1"));
             }
             app.UseMiddleware<ErrorHandlingMiddleware>();
+       //      seeder.SeedUsers();
+       //     seeder.SeedQuestionnaries();
+       //     seeder.SeedCloseQuestionsAnswers();
+       seeder.SeedOpenQuestionsAnswers();
             app.UseAuthentication();
             app.UseHttpsRedirection();
 

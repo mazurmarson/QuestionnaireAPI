@@ -68,3 +68,7 @@ E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\Newtonsoft.Json.Bson
 E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\FluentValidation.dll
 E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\FluentValidation.AspNetCore.dll
 E:\Nauka\QuestionnaireAPI\questionnaireAPI\bin\Debug\net5.0\FluentValidation.DependencyInjectionExtensions.dll
+E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Seed\UserSeedData.json
+E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Seed\QuestionnaireSeedData.json
+E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Seed\CloseQuestionAnswerSeedData.json
+E:\Nauka\QuestionnaireAPI\QuestionnaireAPI\bin\Debug\net5.0\Seed\OpenQuestionAnswerSeedData.json

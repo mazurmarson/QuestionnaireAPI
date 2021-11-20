@@ -1,0 +1,118 @@
+[
+    {
+        "userId":6,
+       "name": "Przykładowa ankieta",
+       "questions": [
+           {
+               "questionType": 1,
+               "questionContent": "Jakiej jesteś płci?",
+               "subanswers": [
+                   {
+                       "content": "kobieta"
+                   },
+                   {
+                       "content": "Mężczyzna"
+                   }
+               ]
+           },
+           {
+                "questionType": 0,
+                "questionContent":"Ile masz lat?"
+           },
+           {
+            "questionType": 0,
+            "questionContent":"Jaka jest twoja ulubiona dyscyplina sportu?"
+           },
+           {
+               "questionType": 2,
+                "questionContent": "Jak najczęściej spędzasz wolny czas?",
+                "subanswers":[
+                    {
+                        "content": "Oglądam tv"
+                    },
+                    {
+                        "content": "Komputer"
+                    },
+                    {
+                        "content": "Książki"
+                    },
+                    {
+                        "content": "Muzyka"
+                    },
+                    {
+                        "content": "Znajomi"
+                    },
+                    {
+                        "content": "Sport"
+                    },
+                    {
+                        "content": "Gazeta"
+                    }
+
+                ]
+
+           }
+       ]
+    },
+
+
+    {
+        "userId":3,
+       "name": "Jedzenie",
+       "questions": [
+           {
+               "questionType": 1,
+               "questionContent": "Jakiej jesteś płci?",
+               "subanswers": [
+                   {
+                       "content": "kobieta"
+                   },
+                   {
+                       "content": "Mężczyzna"
+                   }
+               ]
+           },
+           {
+                "questionType": 0,
+                "questionContent":"Ile masz lat?"
+           },
+           {
+            "questionType": 0,
+            "questionContent":"Jaka jest twoja ulubiona potrawa?"
+           },
+           {
+               "questionType": 2,
+                "questionContent": "Jak typ potraw najbardziej lubisz?",
+                "subanswers":[
+                    {
+                        "content": "pizza"
+                    },
+                    {
+                        "content": "makaron"
+                    },
+                    {
+                        "content": "ciasto"
+                    },
+                    {
+                        "content": "nalesniki"
+                    },
+                    {
+                        "content": "ryz"
+                    },
+                    {
+                        "content": "kotlet"
+                    },
+                    {
+                        "content": "surowka"
+                    }
+
+                ]
+
+           }
+       ]
+    }
+
+
+
+
+]

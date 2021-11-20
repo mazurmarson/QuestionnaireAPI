@@ -1,0 +1,14 @@
+User
+[
+  '{{repeat(50)}}',
+  {
+    name: '{{firstName()}}',
+    mail: function(tags){
+    return this.name + '@o2.pl';
+    },
+    dateOfBirth: '{{date(new Date(1990 - 2015), new Date(), "YYYY-MM-ddThh:mm:ss")}}',
+    passwordHash: function(tags){ 
+      return this.name;
+                            }
+  }
+]
