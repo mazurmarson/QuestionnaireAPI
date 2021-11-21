@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Helpers;
 using QuestionnaireAPI.Models;
+using QuestionnaireAPI.Paggination;
 using QuestionnaireAPI.Repos;
 
 namespace QuestionnaireAPI.Controllers
@@ -52,9 +53,9 @@ namespace QuestionnaireAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetQuestionnaires()
+        public async Task<ActionResult> GetQuestionnaires([FromQuery] PageParameters pageParameters)
         {
-            var questionnaries = await _repo.GetQuestionnaires();
+            var questionnaries = await _repo.GetQuestionnaires(pageParameters);
 
             return Ok(questionnaries);
         }

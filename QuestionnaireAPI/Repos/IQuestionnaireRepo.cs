@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Helpers;
 using QuestionnaireAPI.Models;
+using QuestionnaireAPI.Paggination;
 
 namespace QuestionnaireAPI.Repos
 {
@@ -10,7 +11,7 @@ namespace QuestionnaireAPI.Repos
     {
          Task<Questionnaire> AddQuestionnaire(QuestionnaireAddDto questionnaireAddDto, int userId);
          Task DeleteQuestionnaire(int questionnaireId, UserIdAndRole userIdAndRole);
-         Task<IEnumerable<QuestionnaireDisplayInListDto>> GetQuestionnaires();
+         Task<IEnumerable<QuestionnaireDisplayInListDto>> GetQuestionnaires(PageParameters pageParameters);
          
          Task<QuestionnaireDetailsDto> GetQuestionnaire(int questionnaireId);
 

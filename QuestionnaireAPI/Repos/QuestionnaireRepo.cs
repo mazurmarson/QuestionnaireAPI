@@ -8,6 +8,7 @@ using QuestionnaireAPI.Dtos;
 using QuestionnaireAPI.Exceptions;
 using QuestionnaireAPI.Helpers;
 using QuestionnaireAPI.Models;
+using QuestionnaireAPI.Paggination;
 
 namespace QuestionnaireAPI.Repos
 {
@@ -61,12 +62,13 @@ namespace QuestionnaireAPI.Repos
 
         }
 
-        public async Task<IEnumerable<QuestionnaireDisplayInListDto>> GetQuestionnaires()
+        public async Task<IEnumerable<QuestionnaireDisplayInListDto>> GetQuestionnaires(PageParameters pageParameters)
         {
             var questionnaries = await _context.Questionnaires.Include(x => x.User).ToListAsync();
 
             var result = _mapper.Map<List<QuestionnaireDisplayInListDto>>(questionnaries);
-            return result;
+            
+            return PagedList<QuestionnaireDisplayInListDto>.ToPagedList(result, pageParameters.PageNumber, pageParameters.PageSize);
         }
 
         public async Task<QuestionnaireDetailsDto> GetQuestionnaire(int questionnaireId)
